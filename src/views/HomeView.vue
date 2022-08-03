@@ -13,7 +13,7 @@
 
 <script>
 // @ is an alias to /src
-import Navbar from './Navbar.vue'
+import Navbar from '../components/Navbar.vue'
 
 // setInterval(displayCursor, 1000)
 
