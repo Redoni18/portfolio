@@ -8,13 +8,38 @@
       </div>
       <img src="../assets/developer.svg" alt="">
     </div>
+
+    <div class="projects">
+      <div class="projects-title">
+        <h1>Personal Projects</h1>
+        <p style="font-size: 1.2rem;">Search projects by title or filter by category</p>
+      </div>
+
+      <div class="search-filter-buttons">
+        <div class="search">
+          <button class="search-button">
+            <img src="../assets/search.svg" alt="">
+          </button>
+          <input class="search-input" placeholder="Search for a project" type="text">
+        </div>
+      </div>
+      <hr style="width: 100%;background: rgba(0,160,255,0.2);height: 1px;border: none;">
+      <div class="project-cards">
+          <ProjectsCard />
+          <ProjectsCard />
+          <ProjectsCard />
+
+          <ProjectsCard />
+
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Navbar from '../components/Navbar.vue'
-
+import ProjectsCard from '../components/ProjectsCard.vue'
 // setInterval(displayCursor, 1000)
 
 // function displayCursor () {
@@ -30,7 +55,8 @@ import Navbar from '../components/Navbar.vue'
 export default {
   name: 'HomeView',
   components: {
-    Navbar
+    Navbar,
+    ProjectsCard
   }
 }
 </script>
@@ -58,8 +84,11 @@ export default {
   text-align: left;
 }
 
-h1{
+h1, h2, h3, h4, h5, h6, p {
   color: #eceef3;
+}
+
+h1{
   font-size: 2.8rem;
 }
 
@@ -92,5 +121,85 @@ h1{
    50% { transform: rotate(10.0deg) }
    60% { transform: rotate( 0.0deg) }
   100% { transform: rotate( 0.0deg) }
+}
+
+// projects section
+
+.projects{
+  margin-bottom: 100px;
+}
+
+.search-filter-buttons{
+  height: 60px;
+}
+
+.search{
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 50%;
+}
+
+.search-input{
+  height: 40px;
+  background: rgba(0,160,255,0.2);
+  border: 1px solid rgb(0,160,255);
+  border-radius: 10px;
+  font-size: 1rem;
+  padding-left: 15px;
+  color: #eceef3;
+  font-family: Inter, Arial, sans-serif;
+  margin-left: 15px;
+}
+
+.search-button{
+  padding: 10px;
+  background-color:rgba(0,160,255,0.2);
+  border: none;
+  border-radius: 10px;
+  transition: 0.2s ease-in-out;
+}
+
+.search-button:hover{
+  cursor: pointer;
+}
+
+.search-button img{
+  height: 20px;
+  width: 20px;
+  color: #eceef3;
+  object-fit: contain;
+}
+
+.project-cards{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 20px 0;
+  gap: 15px;
+}
+
+@media screen and (max-width: 1000px){
+    .portfolio-home {
+      width: 700px;
+    }
+
+    .landing{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: unset;
+      margin-top: 40px;
+    }
+
+    .intro-info{
+      text-align: center;
+    }
+
+    h1{
+      color: #eceef3;
+      font-size: 2rem;
+    }
 }
 </style>

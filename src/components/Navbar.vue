@@ -1,9 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <div class="navbar">
-        <div class="logo">
-            <img src="../assets/logo.png" alt="">
-        </div>
+        <router-link class="logo" :to="{name: 'home'}">
+            <img src="../assets/logo.svg" alt="">
+            <img src="../assets/signature.svg" alt="">
+        </router-link>
         <div class="nav-items">
             <ul class="nav-items-list">
                 <li>Projects</li>
@@ -67,13 +68,19 @@ export default {
     background-color:rgba(0,160,255,0.2);
     border-radius: 10px;
     transition: 0.2s ease-in-out;
+    cursor: pointer;
 }
 
 .logo img{
     display: flex;
     justify-content: flex-start;
+    align-items: center;
     object-fit: contain;
     height: 100%;
+}
+
+.logo img:last-child{
+    margin-left: 10px;
 }
 
 .extra-items{
@@ -100,6 +107,7 @@ export default {
     background-color:rgba(0,160,255,0.2);
     border-radius: 10px;
     transition: 0.2s ease-in-out;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 1000px){
