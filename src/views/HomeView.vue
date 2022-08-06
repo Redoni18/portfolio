@@ -207,13 +207,20 @@ h1{
 
 .more-projects__button{
   padding: 10px;
-  background: #3f51b5;
+  background: #1e3851;
   border: none;
   border-radius: 10px;
   transition: 0.2s ease-in-out;
   color: #eceef3;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-family: Inter, Arial, sans-serif;
+  transition: 0.2s ease-in;
+}
+
+.more-projects__button:hover{
+  background: rgba(0,160,255,0.2);
+  cursor: pointer;
+  transition: 0.2s ease-in;
 }
 
 //timeline
