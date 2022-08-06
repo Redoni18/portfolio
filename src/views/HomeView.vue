@@ -28,11 +28,23 @@
           <ProjectsCard />
           <ProjectsCard />
           <ProjectsCard />
+      </div>
+      <button type="submit" class="more-projects__button">
+        View More
+      </button>
+    </div>
 
-          <ProjectsCard />
-
+    <div class="timeline">
+      <div class="experience-timeline">
+        <h1>Timeline</h1>
+        <p style="font-size: 1.2rem;">Timeline of experiences and achievements</p>
+      </div>
+      <div class="timeline-cards">
+        <Timeline />
       </div>
     </div>
+    <hr style="width: 100%;background: rgba(0,160,255,0.2);height: 1px;border: none;">
+    <Footer />
   </div>
 </template>
 
@@ -40,6 +52,8 @@
 // @ is an alias to /src
 import Navbar from '../components/Navbar.vue'
 import ProjectsCard from '../components/ProjectsCard.vue'
+import Timeline from '../components/Timeline.vue'
+import Footer from '../components/Footer.vue'
 // setInterval(displayCursor, 1000)
 
 // function displayCursor () {
@@ -56,7 +70,9 @@ export default {
   name: 'HomeView',
   components: {
     Navbar,
-    ProjectsCard
+    ProjectsCard,
+    Timeline,
+    Footer
   }
 }
 </script>
@@ -72,16 +88,20 @@ export default {
 }
 
 .landing{
-  height: 80vh;
+  max-height: 80vh;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   max-width: 100%;
-  margin-top: 20px;
+  margin-top: 40px;
 }
 
 .intro-info{
   text-align: left;
+}
+
+.intro-info h1{
+  font-size: 2.7rem;
 }
 
 h1, h2, h3, h4, h5, h6, p {
@@ -126,7 +146,12 @@ h1{
 // projects section
 
 .projects{
+  margin-top: 100px;
   margin-bottom: 100px;
+}
+
+.timeline{
+  margin-bottom: 20px;
 }
 
 .search-filter-buttons{
@@ -180,6 +205,27 @@ h1{
   gap: 15px;
 }
 
+.more-projects__button{
+  padding: 10px;
+  background: #3f51b5;
+  border: none;
+  border-radius: 10px;
+  transition: 0.2s ease-in-out;
+  color: #eceef3;
+  font-size: 1.5rem;
+  font-family: Inter, Arial, sans-serif;
+}
+
+//timeline
+.timeline{
+  width: 100%;
+}
+
+.timeline-cards{
+  width: 70%;
+  margin: auto;
+}
+
 @media screen and (max-width: 1000px){
     .portfolio-home {
       width: 700px;
@@ -200,6 +246,22 @@ h1{
     h1{
       color: #eceef3;
       font-size: 2rem;
+    }
+}
+
+@media screen and (max-width: 670px){
+    .search{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .projects-title, .experience-timeline{
+      padding: 10px
+    }
+
+    .intro-info h1{
+      font-size: 1.5rem;
     }
 }
 </style>

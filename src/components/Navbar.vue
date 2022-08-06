@@ -3,7 +3,6 @@
     <div class="navbar">
         <router-link class="logo" :to="{name: 'home'}">
             <img src="../assets/logo.svg" alt="">
-            <img src="../assets/signature.svg" alt="">
         </router-link>
         <div class="nav-items">
             <ul class="nav-items-list">
@@ -132,6 +131,18 @@ export default {
         display: flex;
         justify-content: center;
         object-fit: contain;
+    }
+}
+
+@media screen and (max-width: 670px){
+    .extra-items, .nav-items{
+        display: none;
+    }
+
+    .logo {
+        width: 100%;
+        margin-left: 10px;
+        justify-content: flex-start;
     }
 }
 
