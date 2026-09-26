@@ -16,6 +16,8 @@ useSeoMeta({
   description,
   ogDescription: description,
 })
+
+await useStructuredData()
 </script>
 
 <template>

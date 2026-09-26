@@ -120,6 +120,46 @@
     font-feature-settings: "ss01" off;
   }
 
+  /*
+   * Running text is justified: every line ends flush on the right except a
+   * block's last, which stays left-aligned. Hyphenation (English, from
+   * <html lang="en">) keeps the word gaps even in narrow phone columns.
+   * Utilities still win over this base layer, so the centred figure captions
+   * and the right-aligned "Next" card keep their alignment.
+   */
+  p,
+  li,
+  dd,
+  blockquote,
+  figcaption,
+  .prose a.not-prose > span > span + span /* LinkCard's description */ {
+    text-align: justify;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  /*
+   * Never justified or hyphenated: headings, titles, UI and code that would
+   * inherit it from a paragraph or list item around them (a role's heading, a
+   * project's title, badges, buttons, tooltips, inline code), text inside
+   * navigation (tabs, breadcrumb, docs nav, "On this page") or a popover, and a
+   * callout's title.
+   */
+  :is(p, li, dd, blockquote, figcaption) :is(h1, h2, h3, h4, h5, h6, .project-title-morph, button, [data-slot="button"], [data-slot="badge"], [role="tooltip"], pre, code, kbd, samp, table),
+  :is(nav, [role="tooltip"], [data-slot="popover-content"]) :is(p, li, dd, blockquote, figcaption),
+  .callout > p {
+    text-align: start;
+    -webkit-hyphens: manual;
+    hyphens: manual;
+  }
+
+  /* Mermaid's HTML labels (inside the diagram's <svg>) keep Mermaid's own centring */
+  svg :is(p, li, dd, blockquote, figcaption) {
+    text-align: inherit;
+    -webkit-hyphens: manual;
+    hyphens: manual;
+  }
+
   /* Tailwind v4 gives buttons the default arrow; anything clickable gets the hand */
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),

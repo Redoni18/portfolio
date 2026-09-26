@@ -17,6 +17,17 @@ useSeoMeta({
   description,
   ogDescription: description,
 })
+
+const siteUrl = useRuntimeConfig().public.siteUrl
+await useStructuredData(() => [{
+  '@type': 'ProfilePage',
+  '@id': `${siteUrl}/#profilepage`,
+  'url': `${siteUrl}/`,
+  'name': title,
+  'description': description.value,
+  'isPartOf': { '@id': schemaIds(siteUrl).website },
+  'mainEntity': { '@id': schemaIds(siteUrl).person },
+}])
 </script>
 
 <template>

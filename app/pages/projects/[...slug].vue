@@ -71,12 +71,24 @@ const title = computed(() => isOverview.value ? projectTitle.value : `${page.val
 const description = computed(() => page.value?.description || `${projectTitle.value}: technical notes by Redon Emini.`)
 
 // Every page of a project shares the project's preview image when it's linked
-// anywhere, so a shared link unfurls into the same card as on /projects.
+// anywhere, so a shared link unfurls into the same card as on /projects. A
+// project without a preview leaves these undefined and keeps the site-wide
+// card from app.vue (og.png, large card).
 const config = useRuntimeConfig()
 const preview = computed(() => project.value?.preview)
 const ogImage = computed(() => {
   const src = preview.value?.og ?? preview.value?.src
   return src ? new URL(src, config.public.siteUrl).href : undefined
+})
+// The site-wide default declares image/png, so state this image's own type
+// (`null` drops the tag for a format not listed here).
+const ogImageType = computed(() => {
+  if (!ogImage.value) return undefined
+  const ext = new URL(ogImage.value).pathname.split('.').pop()?.toLowerCase()
+  if (ext === 'png') return 'image/png'
+  if (ext === 'jpg' || ext === 'jpeg') return 'image/jpeg'
+  if (ext === 'webp') return 'image/webp'
+  return null
 })
 
 useSeoMeta({
@@ -89,7 +101,36 @@ useSeoMeta({
   ogImageAlt: computed(() => preview.value?.alt),
   ogImageWidth: computed(() => ogImage.value ? 1200 : undefined),
   ogImageHeight: computed(() => ogImage.value ? 630 : undefined),
-  twitterCard: computed(() => ogImage.value ? 'summary_large_image' : 'summary'),
+  ogImageType,
+})
+
+// Structured data: the same trail as the visible breadcrumb, and the page as an
+// article by the site's owner (the Person node from useStructuredData)
+const pageUrl = computed(() => `${config.public.siteUrl}${path.value}`)
+await useStructuredData(() => {
+  const trail = [
+    { name: 'Projects', url: `${config.public.siteUrl}/projects` },
+    { name: projectTitle.value, url: `${config.public.siteUrl}${rootPath.value}` },
+    ...(isOverview.value || !page.value ? [] : [{ name: docLabel(page.value, rootPath.value), url: pageUrl.value }]),
+  ]
+  return [
+    {
+      '@type': 'BreadcrumbList',
+      'itemListElement': trail.map((crumb, index) => ({ '@type': 'ListItem', 'position': index + 1, 'name': crumb.name, 'item': crumb.url })),
+    },
+    {
+      '@type': 'Article',
+      '@id': `${pageUrl.value}#article`,
+      'headline': page.value?.title,
+      'description': description.value,
+      'url': pageUrl.value,
+      'mainEntityOfPage': pageUrl.value,
+      'image': ogImage.value,
+      'keywords': isOverview.value && page.value?.stack?.length ? page.value.stack.join(', ') : undefined,
+      'author': { '@id': schemaIds(config.public.siteUrl).person },
+      'isPartOf': { '@id': schemaIds(config.public.siteUrl).website },
+    },
+  ]
 })
 </script>
 

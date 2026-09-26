@@ -1,0 +1,10 @@
+# Merged into dist/_headers by Nitro's Cloudflare Pages preset.
+# The markdown copies and llms files are for agents: keep them out of search
+# results so people searching land on the HTML pages instead.
+/*.md
+  content-type: text/markdown; charset=utf-8
+  x-robots-tag: noindex
+/llms.txt
+  x-robots-tag: noindex
+/llms-full.txt
+  x-robots-tag: noindex

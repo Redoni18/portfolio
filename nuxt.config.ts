@@ -34,9 +34,12 @@ export default defineNuxtConfig({
       // favicon.svg follows the system theme: dark tile with light letters in
       // light mode, the inverse in dark mode. It must be the last `icon` link:
       // browsers that support SVG favicons use the last one listed, and the
-      // static .ico (dark tile) is only a fallback for those that don't.
+      // static .ico and .png (dark tile) are only fallbacks for those that
+      // don't. The 192px PNG is also the large raster icon Google Search shows
+      // next to results (it wants a square multiple of 48px).
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico', sizes: '32x32' },
+        { rel: 'icon', type: 'image/png', href: '/favicon-192x192.png', sizes: '192x192' },
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg', sizes: 'any' },
         { rel: 'apple-touch-icon', href: '/apple-touch-icon.png', sizes: '180x180' },
       ],
@@ -144,7 +147,9 @@ export default defineNuxtConfig({
       failOnError: true,
       // `/404.html` is rendered as an SPA shell; Cloudflare Pages serves it with
       // a 404 status for any unknown path.
-      routes: ['/', '/experience', '/projects', '/404.html'],
+      // The agent files are built from the content (server/utils/site-docs.ts).
+      // Each page's markdown copy (/experience.md, …) is queued by app.vue.
+      routes: ['/', '/experience', '/projects', '/404.html', '/sitemap.xml', '/llms.txt', '/llms-full.txt'],
     },
   },
 

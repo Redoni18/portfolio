@@ -1,2 +1,10 @@
-User-Agent: *
-Disallow:
+# Everyone is welcome here, search engines and AI crawlers and agents included.
+User-agent: *
+Allow: /
+
+# Content Signals (contentsignals.org): search indexing, use in AI answers and
+# AI training are all fine.
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+
+# A plain-text summary of the site for AI agents is at /llms.txt
+Sitemap: https://redonemini.com/sitemap.xml

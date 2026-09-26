@@ -1,8 +1,5 @@
 <script setup lang="ts">
-const { data: roles } = await useAsyncData('experience', async () => {
-  const items = await queryCollection('experience').all()
-  return items.sort((a, b) => (a.order ?? 0) - (b.order ?? 0) || b.start.localeCompare(a.start))
-})
+const { data: roles } = await useAsyncData('experience', async () => sortRoles(await queryCollection('experience').all()))
 
 // Short contract engagements go after the employment history, under their own label.
 const employment = computed(() => roles.value?.filter(role => !role.consulting) ?? [])
@@ -16,6 +13,8 @@ useSeoMeta({
   description,
   ogDescription: description,
 })
+
+await useStructuredData()
 </script>
 
 <template>
