@@ -1,0 +1,11 @@
+company: Gjirafa Inc
+role: JavaScript Developer
+location: Pristina, Kosovo
+start: "2021-10"
+end: "2022-12"
+order: 5
+highlights:
+  - Frontend developer on Codex, a headless CMS used by magazines in France and the Czech Republic.
+  - Built responsive interfaces in Vue.js, Vuex and BootstrapVue from well-structured, reusable components.
+  - Worked closely with the backend team on API integration, using Swagger to validate endpoints before building features on them.
+stack: [Vue.js, Vuex, BootstrapVue, GraphQL, SCSS]

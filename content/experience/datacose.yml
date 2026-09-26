@@ -1,0 +1,13 @@
+company: DataCose
+companyUrl: https://datacose.com
+role: Fullstack Engineer & Tech Lead
+location: Remote
+start: "2024-06"
+end: null
+order: 1
+highlights:
+  - Promoted to tech lead of the web development team a year after joining.
+  - Delivered 10+ client projects, from SaaS products to internal business tools, with frontends in Vue 3, Nuxt, TypeScript, Pinia and Tailwind CSS.
+  - Built the APIs behind them with FastAPI, SQLAlchemy and Pydantic on PostgreSQL, running on Google Cloud, Firebase or Supabase depending on the project.
+  - Planned new features as solution architect, breaking them down into technical tasks and documenting the API and database design.
+stack: [TypeScript, Vue 3, Nuxt, Pinia, Tailwind CSS, Python, FastAPI, SQLAlchemy, Pydantic, PostgreSQL, Supabase, GCP, Firebase]

@@ -1,0 +1,12 @@
+company: Cryptosphere Systems
+role: JavaScript Developer
+location: Remote
+start: "2022-12"
+end: "2023-08"
+order: 4
+highlights:
+  - Worked mainly on RINO, a non-custodial Monero wallet.
+  - Also worked on Aris, a crypto transaction platform.
+  - Focused on fast, responsive user interfaces built to modern frontend standards.
+  - Integrated backend APIs across the app and wrote frontend tests with Jest.
+stack: [React, TypeScript, Redux, Tailwind CSS, Jest]

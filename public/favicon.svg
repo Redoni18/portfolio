@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <style>
+    .bg { fill: #0a0a0a; }
+    .fg { fill: #fafafa; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #fafafa; }
+      .fg { fill: #0a0a0a; }
+    }
+  </style>
+  <rect class="bg" width="32" height="32" rx="7"/>
+  <g class="fg">
+    <!-- R -->
+    <rect x="6" y="8" width="3" height="16"/>
+    <path fill-rule="evenodd" d="M6 8H11A4.75 4.75 0 0 1 11 17.5H6ZM9 11H11A1.75 1.75 0 0 1 11 14.5H9Z"/>
+    <path d="M10.2 16.5H13.5L16.4 24H13.1Z"/>
+    <!-- E -->
+    <rect x="18.5" y="8" width="3" height="16"/>
+    <rect x="18.5" y="8" width="7" height="3"/>
+    <rect x="18.5" y="14.5" width="6" height="3"/>
+    <rect x="18.5" y="21" width="7" height="3"/>
+  </g>
+</svg>

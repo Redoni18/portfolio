@@ -1,0 +1,6 @@
+# Cloudflare Pages project config (https://developers.cloudflare.com/pages/functions/wrangler-configuration/)
+# No bindings on purpose: every page is prerendered and only /api/* runs as a Pages Function.
+name = "redonemini"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-09-01"
+compatibility_flags = ["nodejs_compat"]

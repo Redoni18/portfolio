@@ -1,0 +1,639 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Fonts are self-hosted by @nuxt/fonts (see nuxt.config.ts → fonts): Geist for text, Google Sans Code (MONO=1) for the mono role. */
+@theme {
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Google Sans Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+@theme inline {
+  --font-heading: var(--font-sans);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --color-subtle: var(--subtle);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* shadcn "Neutral" tokens. Monochrome only — no accent hues in UI chrome. */
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  /* very light surface used for code blocks and hover rows */
+  --subtle: oklch(0.985 0 0);
+
+  /* GitHub contribution levels: GitHub's own light palette */
+  --gh-0: #ebedf0;
+  --gh-0-border: rgba(27, 31, 35, 0.06);
+  --gh-1: #9be9a8;
+  --gh-2: #40c463;
+  --gh-3: #30a14e;
+  --gh-4: #216e39;
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --subtle: oklch(0.175 0 0);
+
+  /* GitHub contribution levels: GitHub's own dark palette */
+  --gh-0: #161b22;
+  --gh-0-border: rgba(255, 255, 255, 0.05);
+  --gh-1: #0e4429;
+  --gh-2: #006d32;
+  --gh-3: #26a641;
+  --gh-4: #39d353;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-size: 1rem; /* 16px */
+    line-height: 1.65;
+    font-feature-settings: "ss01" off;
+  }
+
+  /* Tailwind v4 gives buttons the default arrow; anything clickable gets the hand */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  summary {
+    cursor: pointer;
+  }
+
+  /* Visible, monochrome focus ring everywhere */
+  :focus-visible {
+    outline: 2px solid var(--foreground);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--foreground);
+    color: var(--background);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/*
+ * Theme switch (ThemeToggle.vue): the whole page is one view transition. Turn
+ * off the default cross-fade so only the circular clip-path reveal animates,
+ * with the new theme drawn on top of the old one.
+ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  z-index: 1;
+}
+
+/* ------------------------------------------------------------------ */
+/* Page transitions (middleware/view-transition.global.ts picks the type) */
+/* ------------------------------------------------------------------ */
+/*
+ * - slide-forward / slide-back, tab to tab: only <main> moves. It slides a short
+ *   way and cross-fades, to the left when heading to a tab further right and to
+ *   the right on the way back, while the activity chart and footer glide to
+ *   where its new height puts them. The root keeps the theme switch's "no
+ *   animation" rule above, so the header and tabs stay put.
+ * - project-open / project-close, /projects ↔ a project's overview, and About ↔
+ *   the overview of a project it lists: the project's title morphs between its
+ *   row (or its link in About's selected projects) and the page heading while
+ *   the rest of the page cross-fades.
+ * - chapter-forward / chapter-back, between pages of one project: the same
+ *   slide, but only the article moves (left for a later page, right for an
+ *   earlier one). The docs nav and the Contents button stay put and the "On
+ *   this page" list cross-fades. (A page picked in the Contents sheet: the sheet
+ *   closes on the tap, before the transition's first frame, so it's in neither
+ *   snapshot.)
+ *
+ * Every view-transition-name here only applies while one of those types is
+ * active. The theme switch runs a transition with no type, so it still captures
+ * the whole page as the one root image its circular reveal needs.
+ *
+ * Scrolling (top, or back to a saved position) is handled in
+ * plugins/page-transitions.client.ts.
+ */
+:root {
+  --page-slide-distance: 2rem;
+  --page-slide-duration: 300ms;
+  --project-morph-duration: 350ms;
+  --page-transition-easing: cubic-bezier(0.215, 0.61, 0.355, 1); /* ease-out-cubic */
+}
+
+html:active-view-transition-type(slide-forward, chapter-forward) {
+  --page-slide-exit: calc(-1 * var(--page-slide-distance));
+  --page-slide-enter: var(--page-slide-distance);
+}
+
+html:active-view-transition-type(slide-back, chapter-back) {
+  --page-slide-exit: var(--page-slide-distance);
+  --page-slide-enter: calc(-1 * var(--page-slide-distance));
+}
+
+html:active-view-transition-type(slide-forward, slide-back) .page-main {
+  view-transition-name: page-main;
+}
+
+html:active-view-transition-type(chapter-forward, chapter-back) .page-article {
+  view-transition-name: page-article;
+}
+
+html:active-view-transition-type(slide-forward, slide-back, chapter-forward, chapter-back) .page-bottom {
+  view-transition-name: page-bottom;
+}
+
+html:active-view-transition-type(slide-forward, slide-back, chapter-forward, chapter-back)::view-transition-group(*) {
+  animation-duration: var(--page-slide-duration);
+  animation-timing-function: var(--page-transition-easing);
+}
+
+/*
+ * <main> (and a project's article) changes height between pages, and at xl
+ * <main> changes width too (project pages are full width). Keep both snapshots
+ * at their own size, pinned top-center (both layouts are centered), and clip
+ * them to the box as it resizes: nothing stretches, and the old page never
+ * spills over the footer gliding up under it.
+ */
+html:active-view-transition-type(slide-forward, slide-back)::view-transition-old(page-main),
+html:active-view-transition-type(slide-forward, slide-back)::view-transition-new(page-main),
+html:active-view-transition-type(chapter-forward, chapter-back)::view-transition-old(page-article),
+html:active-view-transition-type(chapter-forward, chapter-back)::view-transition-new(page-article) {
+  width: 100%;
+  height: 100%;
+  object-fit: none;
+  object-position: top center;
+}
+
+html:active-view-transition-type(slide-forward, slide-back)::view-transition-old(page-main),
+html:active-view-transition-type(chapter-forward, chapter-back)::view-transition-old(page-article) {
+  animation: page-slide-out var(--page-slide-duration) var(--page-transition-easing) both;
+}
+
+html:active-view-transition-type(slide-forward, slide-back)::view-transition-new(page-main),
+html:active-view-transition-type(chapter-forward, chapter-back)::view-transition-new(page-article) {
+  animation: page-slide-in var(--page-slide-duration) var(--page-transition-easing) both;
+}
+
+/*
+ * Chapter to chapter, everything else in <main> keeps still. The docs nav rail
+ * isn't named, so it stays in the root and only its active marker moves. The
+ * Contents button (below xl) is the same on both pages: its own name keeps it
+ * out of the sliding article, and the default cross-fade of two identical
+ * images leaves it still.
+ */
+html:active-view-transition-type(chapter-forward, chapter-back) .docs-contents {
+  view-transition-name: docs-contents;
+}
+
+/*
+ * The "On this page" list (xl) differs per page, so it cross-fades in place,
+ * quickly. It's sticky: when "Next" is clicked from far down it was pinned to
+ * the top of the screen and now sits below the header, so it doesn't glide
+ * between the two (group animation off), it just swaps where it now is.
+ */
+html:active-view-transition-type(chapter-forward, chapter-back) .docs-toc {
+  view-transition-name: docs-toc;
+}
+
+html:active-view-transition-type(chapter-forward, chapter-back)::view-transition-group(docs-toc) {
+  animation: none;
+}
+
+html:active-view-transition-type(chapter-forward, chapter-back)::view-transition-old(docs-toc) {
+  animation: page-fade-out calc(var(--page-slide-duration) / 2) ease both;
+  mix-blend-mode: plus-lighter;
+}
+
+html:active-view-transition-type(chapter-forward, chapter-back)::view-transition-new(docs-toc) {
+  animation: page-fade-in calc(var(--page-slide-duration) / 2) ease both;
+  mix-blend-mode: plus-lighter;
+}
+
+/*
+ * Both pages slide for the whole duration, but the old one has faded out by 30%
+ * and the new one only starts fading in at 20%, so the two never show as
+ * overlapping text.
+ */
+@keyframes page-slide-out {
+  30% {
+    opacity: 0;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(var(--page-slide-exit));
+  }
+}
+
+@keyframes page-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(var(--page-slide-enter));
+  }
+  20% {
+    opacity: 0;
+  }
+}
+
+/*
+ * The title's name comes from its project (projectTitleTransitionName), so only
+ * the clicked project's row (or About link) and heading pair up; the other
+ * projects' titles just fade with the page.
+ */
+html:active-view-transition-type(project-open, project-close) .project-title-morph {
+  view-transition-name: var(--vt-name);
+  view-transition-class: project-title;
+}
+
+html:active-view-transition-type(project-open, project-close) {
+  /* The page cross-fade runs over the middle 60% of the morph */
+  --project-fade-delay: calc(var(--project-morph-duration) * 0.15);
+  --project-fade-duration: calc(var(--project-morph-duration) * 0.6);
+}
+
+html:active-view-transition-type(project-open, project-close)::view-transition-group(*) {
+  animation-duration: var(--project-morph-duration);
+  animation-timing-function: var(--page-transition-easing);
+}
+
+/*
+ * Everything but the title cross-fades as one image, briefly and mid-flight
+ * (eased in and out): the title lifts off the old page and lands on the new
+ * one, and the two pages only overlap for a moment. plus-lighter (the default
+ * the theme switch turns off) keeps what's identical on both sides, like the
+ * header and tabs, at full strength the whole time. The other projects' titles
+ * (a name with no partner, so an only child) fade with the page around them.
+ */
+html:active-view-transition-type(project-open, project-close)::view-transition-old(root) {
+  animation: page-fade-out var(--project-fade-duration) cubic-bezier(0.65, 0, 0.35, 1) var(--project-fade-delay) both;
+  mix-blend-mode: plus-lighter;
+}
+
+html:active-view-transition-type(project-open, project-close)::view-transition-new(root) {
+  animation: page-fade-in var(--project-fade-duration) cubic-bezier(0.65, 0, 0.35, 1) var(--project-fade-delay) both;
+  mix-blend-mode: plus-lighter;
+}
+
+/* Kept apart from the root rules: a browser without view-transition-class drops these alone */
+html:active-view-transition-type(project-open, project-close)::view-transition-old(*.project-title):only-child {
+  animation: page-fade-out var(--project-fade-duration) cubic-bezier(0.65, 0, 0.35, 1) var(--project-fade-delay) both;
+}
+
+html:active-view-transition-type(project-open, project-close)::view-transition-new(*.project-title):only-child {
+  animation: page-fade-in var(--project-fade-duration) cubic-bezier(0.65, 0, 0.35, 1) var(--project-fade-delay) both;
+}
+
+/*
+ * The row title and the heading are different sizes, so their snapshots only
+ * roughly share an aspect ratio. Scale both to the morphing box's width (the
+ * default) but centre them vertically, which keeps the two lines of text on top
+ * of each other instead of drifting apart from the top edge.
+ */
+html:active-view-transition-type(project-open, project-close)::view-transition-old(*.project-title),
+html:active-view-transition-type(project-open, project-close)::view-transition-new(*.project-title) {
+  top: 50%;
+  translate: 0 -50%;
+}
+
+@keyframes page-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Plain text link: foreground with a subtle underline that darkens on hover */
+@utility link {
+  color: var(--foreground);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: color-mix(in oklch, var(--muted-foreground) 45%, transparent);
+  transition: text-decoration-color 150ms ease, color 150ms ease;
+
+  &:hover {
+    text-decoration-color: var(--foreground);
+  }
+}
+
+/* Muted link that turns foreground on hover (icons, metadata) */
+@utility link-muted {
+  color: var(--muted-foreground);
+  transition: color 150ms ease;
+
+  &:hover {
+    color: var(--foreground);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Prose (Markdown/MDC) tuning — used as `prose prose-neutral dark:prose-invert` */
+/* ------------------------------------------------------------------ */
+/* Unlayered on purpose: must win over the typography plugin (utilities layer). */
+.prose {
+  font-size: 1rem;
+  line-height: 1.7;
+  --tw-prose-body: color-mix(in oklch, var(--foreground) 88%, transparent);
+  --tw-prose-headings: var(--foreground);
+  --tw-prose-links: var(--foreground);
+  --tw-prose-bold: var(--foreground);
+  --tw-prose-counters: var(--muted-foreground);
+  --tw-prose-bullets: color-mix(in oklch, var(--muted-foreground) 60%, transparent);
+  --tw-prose-hr: var(--border);
+  --tw-prose-quotes: var(--muted-foreground);
+  --tw-prose-quote-borders: var(--border);
+  --tw-prose-captions: var(--muted-foreground);
+  --tw-prose-code: var(--foreground);
+  --tw-prose-th-borders: var(--border);
+  --tw-prose-td-borders: var(--border);
+  --tw-prose-invert-body: color-mix(in oklch, var(--foreground) 88%, transparent);
+  --tw-prose-invert-headings: var(--foreground);
+  --tw-prose-invert-links: var(--foreground);
+  --tw-prose-invert-bold: var(--foreground);
+  --tw-prose-invert-counters: var(--muted-foreground);
+  --tw-prose-invert-bullets: color-mix(in oklch, var(--muted-foreground) 60%, transparent);
+  --tw-prose-invert-hr: var(--border);
+  --tw-prose-invert-quotes: var(--muted-foreground);
+  --tw-prose-invert-quote-borders: var(--border);
+  --tw-prose-invert-captions: var(--muted-foreground);
+  --tw-prose-invert-code: var(--foreground);
+  --tw-prose-invert-th-borders: var(--border);
+  --tw-prose-invert-td-borders: var(--border);
+}
+
+.prose :where(h1, h2, h3, h4):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  scroll-margin-top: 1.5rem;
+}
+
+.prose :where(h2):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  font-size: 1.25em;
+  margin-top: 2.25em;
+  margin-bottom: 0.75em;
+}
+
+.prose :where(h3):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  font-size: 1.05em;
+  margin-top: 1.75em;
+  margin-bottom: 0.5em;
+}
+
+.prose :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  font-weight: inherit;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: color-mix(in oklch, var(--muted-foreground) 45%, transparent);
+  transition: text-decoration-color 150ms ease;
+}
+
+.prose :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)):hover {
+  text-decoration-color: var(--foreground);
+}
+
+/* Inline code */
+.prose :where(code):not(:where(pre *, [class~="not-prose"], [class~="not-prose"] *)) {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  font-weight: 400;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 0.3rem;
+  padding: 0.1em 0.35em;
+}
+
+.prose :where(code):not(:where(pre *, [class~="not-prose"], [class~="not-prose"] *))::before,
+.prose :where(code):not(:where(pre *, [class~="not-prose"], [class~="not-prose"] *))::after {
+  content: none;
+}
+
+.prose :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  font-style: normal;
+  font-weight: 400;
+  border-left-width: 2px;
+  padding-left: 1rem;
+}
+
+.prose :where(blockquote p):not(:where([class~="not-prose"], [class~="not-prose"] *))::before,
+.prose :where(blockquote p):not(:where([class~="not-prose"], [class~="not-prose"] *))::after {
+  content: none;
+}
+
+.prose :where(hr):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+}
+
+.prose :where(img):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.prose :where(table):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  margin: 0;
+  font-size: 0.875em;
+}
+
+.prose :where(thead th):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  font-weight: 500;
+  padding: 0.6em 0.9em;
+  background: var(--subtle);
+}
+
+.prose :where(tbody td, tfoot td):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  padding: 0.6em 0.9em;
+}
+
+.prose :where(thead th:first-child, tbody td:first-child, thead th:last-child, tbody td:last-child):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  padding-inline: 0.9em;
+}
+
+.prose :where(td, th):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  vertical-align: top;
+}
+
+/* Heading anchors (ProseH2/H3/H4): the heading is the link, `#` shows on hover */
+.prose .heading-anchor {
+  color: inherit;
+  font-weight: inherit;
+  text-decoration-line: none;
+}
+
+.prose .heading-hash {
+  margin-left: 0.4em;
+  color: transparent;
+  font-weight: 400;
+  transition: color 150ms ease;
+}
+
+.prose .heading-anchor:hover .heading-hash,
+.prose .heading-anchor:focus-visible .heading-hash {
+  color: var(--muted-foreground);
+}
+
+/* Callout body: markdown inside inherits prose, slightly tighter */
+.prose .callout-body :where(p) {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose :where(tbody tr:last-child):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  border-bottom-width: 0;
+}
+
+/* Code blocks (ProsePre / Mermaid source). Shiki colours come from inline
+   `--shiki-default` / `--shiki-dark` vars; `html.dark` switches to the dark theme. */
+.code-pre {
+  margin: 0;
+  overflow-x: auto;
+  padding: 0.875rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  color: var(--foreground);
+  background: transparent;
+  tab-size: 2;
+}
+
+.code-pre > code {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  font-family: inherit;
+}
+
+/* Shiki line wrapper (the default MDC ProsePre ships this; ours replaces it) */
+pre code .line {
+  display: block;
+}
+
+.code-pre .line.highlight {
+  margin-inline: -1rem;
+  padding-inline: 1rem;
+  background: var(--muted);
+}
+
+/* Steps: `###` headings inside ::steps become numbered steps on a hairline */
+.mdc-steps {
+  counter-reset: step;
+  position: relative;
+  margin-left: 0.875rem;
+  padding-left: 1.75rem;
+  border-left: 1px solid var(--border);
+}
+
+.mdc-steps :where(h3) {
+  counter-increment: step;
+  position: relative;
+  margin-top: 1.75em !important;
+}
+
+.mdc-steps > :first-child :where(h3),
+.mdc-steps > :where(h3):first-child {
+  margin-top: 0 !important;
+}
+
+.mdc-steps :where(h3)::before {
+  content: counter(step);
+  position: absolute;
+  left: calc(-1.75rem - 0.875rem - 0.5px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.75rem;
+  height: 1.75rem;
+  display: grid;
+  place-items: center;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0;
+}

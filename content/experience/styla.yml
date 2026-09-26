@@ -1,0 +1,11 @@
+company: Styla GmbH
+role: Frontend Developer
+location: Remote
+start: "2023-09"
+end: "2025-02"
+order: 2
+highlights:
+  - Built new features for the Styla Frontend Editor, a WYSIWYG editor, and reworked large parts of it. Also shipped features and fixes in the Styla Layout Engine.
+  - Go-to frontend developer for clients launching their websites on the editor, taking 10 of them from development to deployment.
+  - Worked mostly on the frontend with React, TypeScript and the Context API, and picked up backend tasks in Node.js and Express.
+stack: [React, TypeScript, Context API, Node.js, Express, AWS, Docker]

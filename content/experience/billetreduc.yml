@@ -1,0 +1,12 @@
+company: BilletReduc
+role: Software Developer · Consultant
+location: Remote
+start: "2023-11"
+end: "2024-06"
+order: 3
+consulting: true
+highlights:
+  - Worked on the consumer-facing website, building the frontend with HTML, Sass and jQuery on a .NET stack.
+  - Contributed to the admin dashboard, built with Vue 3, Pinia and BootstrapVue.
+  - Took part in design and demo meetings and helped plan the architecture.
+stack: [.NET, HTML, Sass, jQuery, Vue 3, Pinia, BootstrapVue]
