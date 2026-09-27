@@ -8,7 +8,9 @@ import { onClickOutside } from '@vueuse/core'
  * too close to the top of the screen.
  *
  * `focusable` is off when the name sits inside the header's home link, since a
- * tab stop nested in a link is invalid. Hover still works there.
+ * tab stop nested in a link is invalid. Hover still works there. Only the
+ * focusable name opens on a tap, so only it sets the hand itself; inside the
+ * link it gets the link's.
  */
 const props = defineProps<{ name: string, alias: string, focusable?: boolean }>()
 
@@ -38,7 +40,7 @@ onClickOutside(root, () => {
   <span
     ref="root"
     class="relative underline decoration-dotted decoration-[1.5px] underline-offset-[5px] decoration-muted-foreground/50 transition-[text-decoration-color] duration-150 hover:decoration-foreground"
-    :class="{ 'decoration-foreground': open }"
+    :class="{ 'decoration-foreground': open, 'cursor-pointer': focusable }"
     :tabindex="focusable ? 0 : undefined"
     :aria-describedby="tooltipId"
     @pointerenter="onPointerEnter"

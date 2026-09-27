@@ -17,7 +17,7 @@ const label = computed(() => props.alt || props.caption || 'Image')
   <figure class="not-prose my-6">
     <button
       type="button"
-      class="block w-full cursor-zoom-in overflow-hidden rounded-lg border bg-subtle"
+      class="block w-full cursor-pointer overflow-hidden rounded-lg border bg-subtle"
       :aria-label="`Enlarge image: ${label}`"
       @click="open = true"
     >

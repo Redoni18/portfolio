@@ -9,6 +9,9 @@
  * page transition is running, scroll as soon as the new page has rendered, while
  * it's still hidden behind the transition. Nuxt's own scroll a frame later then
  * finds the page already in place.
+ *
+ * It also keeps the cursor steady while a page transition runs
+ * (utils/view-transition-cursor.ts).
  */
 export default defineNuxtPlugin((nuxtApp) => {
   const router = useRouter()
@@ -30,6 +33,9 @@ export default defineNuxtPlugin((nuxtApp) => {
       // Skipped transitions reject `ready`; there's nothing to adjust then
       .catch(() => {})
   })
+
+  // The clicked link keeps the hand instead of flipping to an arrow until the transition ends
+  nuxtApp.hook('page:view-transition:start', holdCursorDuringViewTransition)
 
   nuxtApp.hook('page:finish', () => {
     if (!transition) return

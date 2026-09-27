@@ -28,6 +28,7 @@ async function toggle() {
     // color-mode applies the `dark` class from a watcher; let it run before the new snapshot
     await nextTick()
   })
+  holdCursorDuringViewTransition(transition)
   await transition.ready
 
   // Percentages are of the snapshot box, so this tracks the real viewport

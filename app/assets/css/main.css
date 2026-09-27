@@ -160,10 +160,25 @@
     hyphens: manual;
   }
 
-  /* Tailwind v4 gives buttons the default arrow; anything clickable gets the hand */
+  /*
+   * Anything clickable gets the hand. Tailwind v4 leaves buttons and form
+   * controls on the default arrow, and links only get the hand from the
+   * browser's own stylesheet, so all of them are listed here. Disabled
+   * controls keep the arrow. Utilities still win over this base layer.
+   */
+  a[href],
+  area[href],
   button:not(:disabled),
-  [role="button"]:not([aria-disabled="true"]),
-  summary {
+  summary,
+  label[for],
+  select:not(:disabled),
+  input:is([type="button"], [type="submit"], [type="reset"], [type="image"], [type="checkbox"], [type="radio"], [type="file"], [type="color"], [type="range"]):not(:disabled),
+  :is([role="button"], [role="link"], [role="tab"], [role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"], [role="option"], [role="switch"], [role="checkbox"], [role="radio"]):not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  /* Its own rule: a browser that doesn't know the pseudo-element would drop the list above with it */
+  input:not(:disabled)::file-selector-button {
     cursor: pointer;
   }
 
