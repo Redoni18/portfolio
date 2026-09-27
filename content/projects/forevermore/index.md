@@ -19,11 +19,11 @@ Forevermore lets you send someone a small animated world. You pick a scene from 
 
 I design, build and ship it on my own, from the illustrations on the catalog cards to the Postgres migrations underneath.
 
-::gallery
+::gallery{cols="4"}
 :figure{src="/projects/forevermore/fairground.webp" alt="Hand-illustrated poster art for a ferris wheel world at night" caption="The Fairground" width="1200" height="1600"}
-:figure{src="/projects/forevermore/manor.webp" alt="Hand-illustrated poster art of a cross-section dollhouse-style manor at night" caption="The Manor" width="1200" height="1600"}
+:figure{src="/projects/forevermore/small-world.webp" alt="Hand-illustrated poster art of a tiny green planet with houses, a windmill and a winding path, floating in a blue sky" caption="Small World" width="1200" height="1600"}
 :figure{src="/projects/forevermore/deep-reef-dive.webp" alt="Hand-illustrated poster art of an underwater reef scene with a glowing pearl" caption="Deep Reef Dive" width="1200" height="1600"}
-:figure{src="/projects/forevermore/starlit-letter.webp" alt="Hand-illustrated poster art of a paper airplane flying past planets toward a heart-shaped constellation" caption="Starlit Letter" width="1200" height="1600"}
+:figure{src="/projects/forevermore/up-we-go.webp" alt="Hand-illustrated poster art of a hot-air balloon rising over green hills and a river, with photo lanterns floating in a golden sky" caption="Up We Go" width="1200" height="1600"}
 ::
 
 ## How it's built
