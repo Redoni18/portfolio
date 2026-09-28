@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Mail } from '@lucide/vue'
 
-/** GitHub, LinkedIn, Twitch and email from `content/profile.yml`, rendered as icon-only buttons. Used by the header and footer. */
+/** GitHub, LinkedIn, email and Twitch from `content/profile.yml`, rendered as icon-only buttons. Used by the header and footer. */
 withDefaults(defineProps<{ size?: 'icon' | 'icon-sm', iconClass?: string }>(), { size: 'icon', iconClass: 'size-5' })
 
 const { data: profile } = await useProfile()
@@ -45,13 +45,11 @@ const { data: profile } = await useProfile()
         variant="ghost"
         :size="size"
         class="text-muted-foreground transition-colors duration-150 hover:text-foreground"
-        :href="profile.links.twitch"
-        target="_blank"
-        rel="me noopener"
-        aria-label="Twitch"
-        title="Twitch"
+        :href="`mailto:${profile.email}`"
+        :aria-label="`Email ${profile.email}`"
+        :title="profile.email"
       >
-        <IconTwitch :class="iconClass" aria-hidden="true" />
+        <Mail :class="iconClass" aria-hidden="true" />
       </Button>
     </li>
     <li>
@@ -60,11 +58,13 @@ const { data: profile } = await useProfile()
         variant="ghost"
         :size="size"
         class="text-muted-foreground transition-colors duration-150 hover:text-foreground"
-        :href="`mailto:${profile.email}`"
-        :aria-label="`Email ${profile.email}`"
-        :title="profile.email"
+        :href="profile.links.twitch"
+        target="_blank"
+        rel="me noopener"
+        aria-label="Twitch"
+        title="Twitch"
       >
-        <Mail :class="iconClass" aria-hidden="true" />
+        <IconTwitch :class="iconClass" aria-hidden="true" />
       </Button>
     </li>
   </ul>
