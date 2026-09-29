@@ -16,7 +16,7 @@ export function schemaIds(siteUrl: string) {
  * ProfilePage, an Article…), which can point at the person by `@id`.
  *
  * Search engines, and the AI assistants that search through them, read this to
- * tie the site to one person: name and alias, current role and employer,
+ * tie the site to one person: name and alias, photo, current role and employer,
  * location, the stack used day to day, and the GitHub/LinkedIn/Twitch profiles
  * that are the same person (`sameAs`).
  */
@@ -47,6 +47,7 @@ export function useStructuredData(pageNodes: MaybeRefOrGetter<SchemaNode[]> = []
         'name': me.name,
         'alternateName': me.alias,
         'url': `${siteUrl}/`,
+        'image': `${siteUrl}/redon.jpg`,
         'email': me.email,
         'jobTitle': me.current.role,
         'worksFor': { '@type': 'Organization', 'name': me.current.company, 'url': me.current.companyUrl },
