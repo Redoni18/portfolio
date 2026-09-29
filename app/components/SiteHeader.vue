@@ -13,9 +13,9 @@ const firstName = computed(() => profile.value?.name.split(' ')[0] ?? '')
       <img
         src="/redon.webp"
         :alt="profile.name"
-        width="128"
-        height="128"
-        class="size-20 shrink-0 rounded-full border object-cover sm:size-32"
+        width="120"
+        height="120"
+        class="size-19 shrink-0 rounded-full border object-cover sm:size-30"
       >
 
       <div class="min-w-0">
