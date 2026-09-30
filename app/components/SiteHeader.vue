@@ -29,14 +29,15 @@ const firstName = computed(() => profile.value?.name.split(' ')[0] ?? '')
         </p>
 
         <p class="mt-2 text-foreground/80 text-pretty">
-          I'm a fullstack engineer and tech lead at
+          I'm a fullstack software engineer based in {{ profile.location }}.<br>
+          Currently a fullstack engineer and tech lead at
           <a
             v-if="profile.current.companyUrl"
             :href="profile.current.companyUrl"
             class="link"
             target="_blank"
             rel="noopener"
-          >{{ profile.current.company }}</a><template v-else>{{ profile.current.company }}</template>, based in {{ profile.location }}. I build my own products on the side.
+          >{{ profile.current.company }}</a><template v-else>{{ profile.current.company }}</template>.
         </p>
 
         <div class="mt-2 flex flex-wrap items-center gap-x-1">
