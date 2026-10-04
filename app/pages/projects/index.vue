@@ -27,30 +27,31 @@ await useStructuredData()
     </h1>
 
     <!--
-      Each project shows its link preview (the site's own share image), then its
-      address, title, pitch and stack. On phones that's a bordered card with the
-      preview full-width on top and the text below it; from sm up it's a row
-      with a small thumbnail on the left and the text on the right.
+      Each project is a bordered card: its link preview (the site's own share
+      image) full-width on top, then its address, title, pitch and stack. One
+      column on phones, two from sm up. Cards in the same row stretch to the same
+      height and the stack sits on the bottom edge, so the badge rows line up.
 
-      The title link stretches over the whole card or row (its ::after covers
+      The title link stretches over the whole card (its ::after covers
       the <li>), so all of it is clickable while the stack's "+N" button stays a
       real button instead of an interactive element nested inside a link.
 
       The title text sits in its own inline-block so that, on the way to or from
       a project, it can morph into the project page's heading ("Page
-      transitions" in main.css). The Personal/Work badge sits beside the title
-      rather than inside it, so only the text morphs.
+      transitions" in main.css). The Personal/Work tag sits flush in the card's
+      top-right corner, outside the title, so only the text morphs. It ignores
+      clicks so they reach the card link underneath.
     -->
-    <ul class="space-y-4 sm:-mx-3 sm:space-y-1">
+    <ul class="grid gap-4 sm:grid-cols-2">
       <li
         v-for="(project, index) in projects"
         :key="project.path"
-        class="relative flex flex-col overflow-hidden rounded-lg border transition-colors duration-150 hover:bg-muted/60 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-foreground sm:flex-row sm:gap-5 sm:overflow-visible sm:border-0 sm:px-3 sm:py-4"
+        class="relative flex flex-col overflow-hidden rounded-lg border transition-colors duration-150 hover:bg-muted/60 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-foreground"
       >
         <!-- Decorative here: the project's title already names the link -->
         <div
           v-if="project.preview"
-          class="aspect-[1200/630] w-full shrink-0 self-start overflow-hidden border-b bg-subtle sm:w-48 sm:rounded-md sm:border"
+          class="aspect-[1200/630] w-full shrink-0 overflow-hidden border-b bg-subtle"
         >
           <img
             :src="project.preview.src"
@@ -74,16 +75,16 @@ await useStructuredData()
           >
         </div>
 
-        <div class="min-w-0 flex-1 p-4 sm:p-0">
+        <div class="flex min-w-0 flex-1 flex-col px-4 py-3">
           <p
             v-if="linkLabel(project.links?.live ?? project.links?.repo)"
-            class="truncate font-mono text-[13px] text-muted-foreground"
+            class="truncate font-mono text-xs text-muted-foreground"
           >
             {{ linkLabel(project.links?.live ?? project.links?.repo) }}
           </p>
           <div class="mt-0.5 flex items-baseline justify-between gap-4">
             <div class="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1">
-              <h2 class="font-medium text-foreground">
+              <h2 class="leading-6 font-medium text-foreground">
                 <NuxtLink
                   :to="project.path"
                   class="after:absolute after:inset-0 after:rounded-lg after:content-[''] focus-visible:outline-none"
@@ -91,23 +92,31 @@ await useStructuredData()
                   <span class="project-title-morph inline-block" :style="{ '--vt-name': projectTitleTransitionName(project.path) }">{{ project.title }}</span>
                 </NuxtLink>
               </h2>
-              <Badge v-if="project.kind" variant="secondary" class="font-normal">
-                <span aria-hidden="true">{{ kindLabels[project.kind] }}</span>
-                <span class="sr-only">{{ kindLabels[project.kind] }} project</span>
-              </Badge>
+              <!--
+                A notch of the card's own surface, with the card's hairline on its
+                open edges, so it reads on dark and light previews alike. Its
+                bottom-left corner uses the card's radius; the card's own corner
+                clips its top-right.
+              -->
+              <span
+                v-if="project.kind"
+                class="pointer-events-none absolute top-0 right-0 rounded-bl-lg border-b border-l bg-background px-2.5 py-1 text-[13px]/4 font-semibold text-foreground"
+              >
+                {{ kindLabels[project.kind] }} project
+              </span>
             </div>
-            <span v-if="project.year" class="shrink-0 font-mono text-sm text-muted-foreground tabular-nums">
+            <span v-if="project.year" class="shrink-0 font-mono text-xs text-muted-foreground tabular-nums">
               {{ project.year }}
             </span>
           </div>
-          <p v-if="project.description" class="mt-1 text-muted-foreground text-pretty">
+          <p v-if="project.description" class="mt-1 text-[13px]/5 text-muted-foreground text-pretty">
             {{ project.description }}
           </p>
-          <!-- Clicks fall through to the row link; only the "+N" button takes them -->
+          <!-- Clicks fall through to the card link; only the "+N" button takes them -->
           <StackBadges
             v-if="project.stack?.length"
             :items="project.stack"
-            class="pointer-events-none mt-3"
+            class="pointer-events-none mt-auto pt-3"
           />
         </div>
       </li>
