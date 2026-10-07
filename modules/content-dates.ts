@@ -7,9 +7,14 @@ import { addServerTemplate, addTypeTemplate, defineNuxtModule, useLogger } from 
  * <lastmod>. Server code imports it as `#content-dates`:
  * `{ 'projects/clairwire/index.md': '2026-09-27T00:49:01+02:00', … }`.
  *
- * It's empty when there's no usable git history: no repo, or a shallow clone,
- * where every file would get the date of the one commit that was fetched.
- * The sitemap then leaves <lastmod> out rather than give a wrong date.
+ * Cloudflare Pages builds from a shallow clone (only the commit being built),
+ * so there the rest of the history is fetched first; the repo is public, so
+ * no credentials are needed.
+ *
+ * It's empty when there's no usable git history: no repo, or a shallow clone
+ * that couldn't be (or, outside Pages, isn't) deepened, where every file would
+ * get the date of the one commit that was fetched. The sitemap then leaves
+ * <lastmod> out rather than give a wrong date.
  */
 export default defineNuxtModule({
   meta: { name: 'content-dates' },
@@ -40,9 +45,13 @@ export default defineNuxtModule({
 })
 
 function readContentDates(contentDir: string): Record<string, string> {
-  const git = (...args: string[]) => execFileSync('git', args, { cwd: contentDir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] })
+  const git = (...args: string[]) => execFileSync('git', args, { cwd: contentDir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], timeout: 60_000 })
+  const isShallow = () => git('rev-parse', '--is-shallow-repository').trim() === 'true'
   try {
-    if (git('rev-parse', '--is-shallow-repository').trim() === 'true') return {}
+    // Only on Pages (CF_PAGES=1): a local shallow clone is left as it is.
+    // Fetching the built commit by hash also works for preview branches.
+    if (isShallow() && process.env.CF_PAGES) git('fetch', '--unshallow', '--quiet', 'origin', git('rev-parse', 'HEAD').trim())
+    if (isShallow()) return {}
 
     // Newest commit first, so the first date seen for a file is its latest.
     // `--relative` makes the file names relative to content/.
